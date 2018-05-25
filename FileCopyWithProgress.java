@@ -21,28 +21,36 @@ public class FileCopyWithProgress {
 		//create() will create all dirs
 		OutputStream out = fs.create(new Path(dst),new Progressable() {
 			public void progress() {
-				System.out.println(filePath+":"+dst);
+				System.out.println("64KB:File copy from " + filePath + " to "+dst);
 			}
 		});
 		IOUtils.copyBytes(in, out, 4096,true);
 	}
-	public void loadFile(File[] files,String dst) throws IOException, InterruptedException{
+	public void loadFiles(File[] files,String dst) throws IOException, InterruptedException{
 		for(int index = 0; index < files.length; index++) {
 			if (files[index].isFile()) {
-				fileCopy(files[index].getPath(),files[index].getPath());
+				fileCopy(files[index].getPath(),dst + files[index].getName());
 			}else if(files[index].isDirectory()){
 				File newFile = new File(files[index].getPath());
 				File[] dir = newFile.listFiles();
-				loadFile(dir,dst);
+				loadFiles(dir,dst);
 			}
 		}
 	}
 	public static void main(String[] args)throws Exception{
 		String localSrc = args[0];
 		String dst = args[1];
-		File file = new File(localSrc);
-        File[] files = file.listFiles();
+		if (dst.substring(dst.length()-1) != "/") {
+			dst = dst + "/";
+		}
 		FileCopyWithProgress fs = new FileCopyWithProgress();
-		fs.loadFile(files, dst);
+		File file = new File(localSrc);
+		if (file.isFile()) {
+			fs.fileCopy(localSrc, dst + file.getName());
+		}
+		else {
+			File[] files = file.listFiles();
+			fs.loadFiles(files, dst);
+		}
 	}
 }

@@ -22,7 +22,6 @@ public class CreateTableColumn {
 	//exmple:{"key":"value"} => HBase:{NAME => {key}
 	private void addColumn(File file) throws IOException,InterruptedException{
         BufferedReader reader = null;
-		RecordParser parser = new RecordParser();
 		String input = "";
 		try {
 			System.out.println("以行为单位读取文件内容，一次读一整行：");
@@ -30,11 +29,14 @@ public class CreateTableColumn {
             Connection connection = ConnectionFactory.createConnection(HBaseConfiguration.create());
             // 一次读入一行，直到读入null为文件结束
             while((input = reader.readLine()) != null) {
+            	//get HBase table by name
         		Table table = connection.getTable(TableName.valueOf("pkg"));
         		TableDescriptor tableDescriptor = table.getDescriptor();
+        		//get table column
         		Set<byte[]> columnName = tableDescriptor.getColumnFamilyNames();
         		Iterator<byte[]> iterator = columnName.iterator();
-               	Map<?, ?> pkg = parser.parse(input);
+               	Map<?, ?> pkg = RecordParser.parse(input);
+               	//create every column which not exist
            		for(Object key:pkg.keySet()) {
            			boolean columnExist = false;
            			while(iterator.hasNext()) {

@@ -15,18 +15,19 @@ public class SparkTest {
 			System.exit(-1);
 		}
 		SparkConf conf = new SparkConf();
-		JavaSparkContext sc = new JavaSparkContext("local","SparkTest",conf);
+		JavaSparkContext sc = new JavaSparkContext("yarn","SparkTest",conf);
 		//input file as lines
 		JavaRDD<String> lines = sc.textFile(args[0]);
 		//map the lines as <rec1,rec2>
 		JavaRDD<String[]> records = lines.map(
-				(String s) -> (s.split(" ")));
+				s -> s.split(" "));
 		//filter records
 		JavaRDD<String[]> filter = records.filter(
-				(String[] rec) ->(!rec[1].equalsIgnoreCase("999")));
+				rec ->!rec[1].equalsIgnoreCase("999"));
+		//set the records to Tuple2<key,value>
 		JavaPairRDD<Integer, Integer> tuples = filter.mapToPair(
-				(String[] rec) -> (new Tuple2<Integer,Integer>
-				(Integer.parseInt(rec[0]),Integer.parseInt(rec[1]))));
+				rec -> new Tuple2<Integer,Integer>
+				(Integer.parseInt(rec[0]),Integer.parseInt(rec[1])));
 		//do the reduce
 		JavaPairRDD<Integer, Integer> maxTemps = tuples.reduceByKey(
 				(Integer arg0,Integer arg1) ->
@@ -63,6 +64,7 @@ public class SparkTest {
 //			}
 //		});
 		maxTemps.saveAsTextFile(args[1]);
+		sc.stop();
 		sc.close();
 	}
 }

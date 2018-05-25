@@ -19,12 +19,10 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class HBaseImporter extends Configured implements Tool{
 	static class HBaseMapper<K> extends Mapper<LongWritable, Text, K, Put>{
-		private RecordParser parser = new RecordParser();
-		
 		@Override
 		public void map(LongWritable key,Text input,Context context)
 				throws IOException,InterruptedException{
-			Map<?, ?> pkg = parser.parse(input.toString());
+			Map<?, ?> pkg = RecordParser.parse(input.toString());
 			if(!pkg.isEmpty()) {
 				byte[] rowKey = 
 						RowKeyConverter.makeInfoRowKey(pkg.get("id").toString(),
