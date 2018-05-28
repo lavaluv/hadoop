@@ -53,6 +53,10 @@ README
 	* 下载安装
 	* 环境配置
     * 单机部署
+        * 配置spark-env.sh
+    	* spark-shell
+    	* Java API
+    	* 监控页面
     * 伪分布式部署
     * 完全分布式部署
 * [Kafka](#Kafka)
@@ -75,7 +79,8 @@ README
 
 官方文档
 ------
-
+	Hadoop官方文档：
+	[http://hadoop.apache.org/docs/r2.7.6/](http://hadoop.apache.org/docs/r2.7.6/)
 
 
 CentOS
