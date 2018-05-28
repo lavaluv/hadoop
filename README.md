@@ -80,7 +80,7 @@ README
 官方文档
 ------
 	Hadoop官方文档：
-	[http://hadoop.apache.org/docs/r2.7.6/](http://hadoop.apache.org/docs/r2.7.6/)
+[http://hadoop.apache.org/docs/r2.7.6/](http://hadoop.apache.org/docs/r2.7.6/)
 
 
 CentOS
