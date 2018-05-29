@@ -17,6 +17,7 @@ README
 	* Java
 * [官方文档](#官方文档)
 * [CentOS](#CentOS)
+	* 安装VMware
 * [Hadoop](#Hadoop)
     * 下载安装
     * 环境配置
@@ -129,8 +130,22 @@ README
 	scp ~/.ssh/id_rsa.pub YourSlaveName@YourSlaveIP:~/
 ```
 ### Java 
-
-
+`JRE下载地址`:[http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
+或直接使用yum安装jdk;
+```bash
+	yum install java
+```
+修改bashrc环境变量:
+```bash
+	vi ~/.bashrc
+```
+输入：
+```bash
+	export JAVA_HOME=/your/java/home
+	export PATH=$PATH:$JAVA_HOME/bin
+```
+键入'ESC'退出编辑，输入':wq'保存并退出
+--[目录](#目录)--
 
 官方文档
 ------
@@ -142,6 +157,7 @@ README
 
 CentOS
 ------
+### 安装VMware
 
 
 Hadoop
