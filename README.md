@@ -81,26 +81,26 @@ README
 ```
 *各平台的兼容性请参考官方文档*
 ### SSH密匙
-`检查ssh协议`：TODO
-`安装ssh协议`：yum install ssh
-`启动服务`：service sshd restart
-`在Master主机上生成密匙对`：ssh-keygen -t rsa
+`检查ssh协议`：TODO  
+`安装ssh协议`：yum install ssh  
+`启动服务`：service sshd restart  
+`在Master主机上生成密匙对`：ssh-keygen -t rsa  
 ```
 	rsa是加密算法,询问密码时可以选择空密码，
 	如果设置密码，每次开启服务时仅需要输入一次密码；
 	询问其保存路径时直接回车采用默认路径（/home/*YourUserName*/.ssh）。
 ```
-`把公钥id_rsa.pub追加到authorized_keys里`:cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-`修改anthorized_keys的权限`:chmod 600 ~/.ssh/authorized_keys
-`修改ssh配置文件`:vi /etc/ssh/sshd_config
+`把公钥id_rsa.pub追加到authorized_keys里`:cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys  
+`修改anthorized_keys的权限`:chmod 600 ~/.ssh/authorized_keys  
+`修改ssh配置文件`:vi /etc/ssh/sshd_config  
 ```
 	把文件中的下面几条信息的注释去掉：　
 　　    RSAAuthentication yes # 启用 RSA 认证
 　　    PubkeyAuthentication yes # 启用公钥私钥配对认证方式
 　　    AuthorizedKeysFile .ssh/authorized_keys # 公钥文件路径（和上面生成的文件同）
 ```
-`重启服务`:service sshd restart
-`分布式部署时，需要将公匙复制到slave机器上`:scp ~/.ssh/id_rsa.pub YourSlaveName@YourSlaveIP:~/
+`重启服务`:service sshd restart  
+`分布式部署时，需要将公匙复制到slave机器上`:`scp ~/.ssh/id_rsa.pub YourSlaveName@YourSlaveIP:~/`
 ### Java 
 
 
