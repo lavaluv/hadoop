@@ -146,7 +146,7 @@ README
 ```
 键入'ESC'退出编辑，输入':wq'保存并退出
 
---------[目录](#目录)
+--[返回目录](#目录)--
 
 官方文档
 ------
@@ -156,10 +156,13 @@ README
 `Spark官方文档`：[http://spark.apache.org/docs/latest/](http://spark.apache.org/docs/latest/)  
 `Kafka官方文档`：[http://kafka.apache.org/documentation/](http://kafka.apache.org/documentation/)
 
+--[返回目录](#目录)--
+
 CentOS
 ------
 ### 安装VMware
 
+--[返回目录](#目录)--
 
 Hadoop
 ------
@@ -183,6 +186,8 @@ Hadoop
 
 ### 完全分布式部署
 
+--[返回目录](#目录)--
+
 HBase
 ------
 
@@ -201,6 +206,8 @@ HBase
 
 ### 完全分布式部署
 
+--[返回目录](#目录)--
+
 Zookeeper
 ------
 
@@ -213,6 +220,8 @@ Zookeeper
 ### 伪分布式部署
 
 ### 完全分布式部署
+
+--[返回目录](#目录)--
 
 Spark
 ------
@@ -227,6 +236,8 @@ Spark
 
 ### 完全分布式部署
 
+--[返回目录](#目录)--
+
 Kafka
 ------
 
@@ -239,5 +250,7 @@ Kafka
 ### 伪分布式部署
 
 ### 完全分布式部署
+
+--[返回目录](#目录)--
 
 --------------------------------
