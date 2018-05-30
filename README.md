@@ -17,7 +17,8 @@ README
 	* Java
 * [官方文档](#官方文档)
 * [CentOS](#CentOS)
-	* 安装VMware
+	* 系统配置
+	* 分布式迁移
 * [Hadoop](#Hadoop)
     * 下载安装
     * 环境配置
@@ -30,7 +31,6 @@ README
     	* 配置mapred-site.xml
     	* 启动节点
     	* 运行测试
-    	* Java API
     	* 监控页面
     * 完全分布式部署
 * [HBase](#HBase)
@@ -40,7 +40,6 @@ README
     	* 配置hbase-site.xml
     	* 启动服务
     	* hbase shell
-    	* java API
     	* 监控页面
     * 伪分布式部署
     * 完全分布式部署
@@ -56,7 +55,6 @@ README
     * 单机部署
         * 配置spark-env.sh
     	* spark-shell
-    	* Java API
     	* 监控页面
     * 伪分布式部署
     * 完全分布式部署
@@ -144,7 +142,11 @@ README
 	export JAVA_HOME=/your/java/home
 	export PATH=$PATH:$JAVA_HOME/bin
 ```
-键入'ESC'退出编辑，输入':wq'保存并退出
+键入'ESC'退出编辑，输入':wq'保存并退出  
+使环境变量生效:
+```bash
+	source ~/.bashrc
+```
 
 --[返回目录](#目录)--
 
@@ -156,11 +158,19 @@ README
 `Spark官方文档`：[http://spark.apache.org/docs/latest/](http://spark.apache.org/docs/latest/)  
 `Kafka官方文档`：[http://kafka.apache.org/documentation/](http://kafka.apache.org/documentation/)
 
---[返回目录](#目录)--
-
 CentOS
 ------
-### 安装VMware
+### 系统配置
+`设置VMware端口转换`:
+[![vmNAT]]()
+`使用VMware加载centOS镜像，尽量分配较多的内存以及处理器资源`:  
+[![vm]]()  
+`配置centOS图形化界面`:
+[![centOSUI]]()  
+`配置用户`:
+[![centOSUSER]]()
+
+### 分布式迁移
 
 --[返回目录](#目录)--
 
@@ -168,22 +178,128 @@ Hadoop
 ------
 
 ### 下载安装
-
+`下载地址`:[http://hadoop.apache.org/releases.html](http://hadoop.apache.org/releases.html)
+解压并移动到自己创建的目录下:
+```bash
+	tar -zxf /your/hadoop/tar -C /your/destination
+```
 ### 环境配置
+配置hadoop环境变量:
+```bash
+	vi ~/.bashrc
+```
+键入:
+```
+	export HADOOP_HOME=/your/hadoop/dir
+	export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+```
+使配置生效:
+```bash
+	source ~/.bashrc
+```
 
 ### 单机部署
 #### 运行测试
-
+创建wordcount输入文件：
+```bash
+	cat /home/UserName/Desktop/wc.input
+	hadoop marpreduce hive
+	hbase spark storm'
+	sqoop hadoop hive
+	spark hadoop
+```
+运行hadoop自带的wordcount例子:
+```bash
+	hadoop jar hadoop-mapreduce-examples-2.7.6.jar wordcount /home/UserName/Desktop/wc.input
+```
 ### 伪分布式部署
 #### 配置core-site.xml
+`hadoop配置文件在hadoop目录下的etc/hadoop里。`
+在core-site.xml里添加:
+```xml
+	<configuration>
+   		<property>
+      		<name>fs.default.name </name>
+      		<value> hdfs://localhost:8020 </value> 
+   		</property>
+	</configuration>
+```
+其中hdfs://localhost:8020代表运行在本地模式
 #### 配置hdfs-site.xml
-#### 配置yarn-site.xml
-#### 配置mapred-site.xml
-#### 启动节点
-#### 运行测试
-#### Java API
-#### 监控页面
+在hdfs-site.xml里添加:
+```xml
+<configuration>
 
+   <property>
+      <name>dfs.replication</name>
+      <value>1</value>
+   </property>
+    
+   <property>
+      <name>dfs.name.dir</name>
+      <value>file:///home/hadoop/hadoopinfra/hdfs/namenode </value>
+   </property>
+    
+   <property>
+      <name>dfs.data.dir</name> 
+      <value>file:///home/hadoop/hadoopinfra/hdfs/datanode </value> 
+   </property>
+       
+</configuration>
+```
+其中dfs.replication为设置副本数量，  
+dfs.name.dir为设置namenode的存储地址，  
+dfs.data.dir为datanode的存储地址
+#### 配置yarn-site.xml
+在yarn-site.xml里添加:
+```xml
+<configuration>
+ 
+   <property>
+      <name>yarn.nodemanager.aux-services</name>
+      <value>mapreduce_shuffle</value> 
+   </property>
+  
+</configuration>
+```
+#### 配置mapred-site.xml
+将mapred-site.xml.template重命名为mapred-site.xml并输入：
+```xml
+<configuration>
+ 
+   <property> 
+      <name>mapreduce.framework.name</name>
+      <value>yarn</value>
+   </property>
+   
+</configuration>
+```
+#### 启动节点
+格式化HDFS：
+```bash
+	hdfs namenode -format
+```
+启动namenode,datanode,secondary namenode:
+```bash
+	start-dfs.sh
+```
+启动yarn:
+```bash
+	start-yarn.sh
+```
+关闭服务:
+```bash
+	stop-all.sh
+```
+#### 运行测试
+```bash
+	hadoop jar hadoop-mapreduce-examples-2.7.6.jar wordcount /home/UserName/Desktop/wc.input
+```
+#### 监控页面
+访问Hadoop默认端口号为8088，使用以下网址获得浏览器Hadoop的服务:
+```
+	http://localhost:8088
+```
 ### 完全分布式部署
 
 --[返回目录](#目录)--
@@ -192,17 +308,65 @@ HBase
 ------
 
 ### 下载安装
-
+`下载地址`:[http://hbase.apache.org/downloads.html](http://hbase.apache.org/downloads.html)
+解压并移动到自己创建的目录下:
+```bash
+	tar -zxf /your/hbase/tar -C /your/destination
+```
 ### 环境配置
-
+配置hadoop环境变量:
+```bash
+	vi ~/.bashrc
+```
+键入:
+```
+	export HBASE_HOME=/your/hbase/dir
+	export PATH=$HBASE_HOME/bin:$HBASE_HOME/sbin:$PATH
+```
+使配置生效:
+```bash
+	source ~/.bashrc
+```
 ### 单机部署
+`单机模式下HBase运行在本地，不需要HDFS支持`
 #### 配置hbase-site.xml
+配置文件在hbase目录/conf下，修改添加:
+```xml
+	<configuration>
+		<property>
+			<name>hbase.rootdir</name>
+			<value>file:///your/dir/name</value>
+		</property>
+	<configuration>
+```
 #### 启动服务
+```bash
+	start-hbase.sh
+```
+使用jps查看进程。  
+停止服务:
+```bash
+	stop-hbase.sh
+```
 #### hbase shell
-#### Java API
+进入hbase shell:
+```bash
+	hbase shell
+```
+hbase shell基本操作：
+```bash
+	help   ##显示帮助
+	create 'tableName','columnFamilyName',...	##创建表
+	scan 'tableName'	##扫描表	
+	get 'tableName','columnFamilyName'	##获取某行数据
+```
 #### 监控页面
-
+访问HBase默认端口号为60010，使用以下网址获得浏览器Hbase的服务:
+```
+	http://localhost:60010
+```
 ### 伪分布式部署
+`伪分布式的HBase依赖于HDFS,需要启动hadoop服务`
 
 ### 完全分布式部署
 
