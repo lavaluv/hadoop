@@ -16,10 +16,10 @@ README
 	* SSH密匙
 	* Java
 * [官方文档](#官方文档)
-* [CentOS](#CentOS)
+* [CentOS](#centOS)
 	* 系统配置
 	* 分布式迁移
-* [Hadoop](#Hadoop)
+* [Hadoop](#hadoop)
     * 下载安装
     * 环境配置
     * 单机部署
@@ -33,7 +33,7 @@ README
     	* 运行测试
     	* 监控页面
     * 完全分布式部署
-* [HBase](#HBase)
+* [HBase](#hbase)
 	* 下载安装
 	* 环境配置
     * 单机部署
@@ -43,13 +43,13 @@ README
     	* 监控页面
     * 伪分布式部署
     * 完全分布式部署
-* [Zookeeper](#Zookeeper) 
+* [Zookeeper](#zookeeper) 
 	* 下载安装
 	* 环境配置
     * 单机部署
     * 伪分布式部署
     * 完全分布式部署
-* [Spark](#Spark)
+* [Spark](#spark)
 	* 下载安装
 	* 环境配置
     * 单机部署
@@ -58,7 +58,7 @@ README
     	* 监控页面
     * 伪分布式部署
     * 完全分布式部署
-* [Kafka](#Kafka)
+* [Kafka](#kafka)
 	* 下载安装
 	* 环境配置
     * 单机部署
