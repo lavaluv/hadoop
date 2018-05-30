@@ -128,8 +128,8 @@ README
 	scp ~/.ssh/id_rsa.pub YourSlaveName@YourSlaveIP:~/
 ```
 ### Java 
-`JRE下载地址`:[http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
-或直接使用yum安装jdk;
+`JRE下载地址`:[http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)  
+或直接使用yum安装jdk:
 ```bash
 	yum install java
 ```
@@ -162,7 +162,7 @@ CentOS
 ------
 ### 系统配置
 `设置VMware端口转换`:
-[![vmNAT]]()
+[![vmNAT]]()  
 `使用VMware加载centOS镜像，尽量分配较多的内存以及处理器资源`:  
 [![vm]]()  
 `配置centOS图形化界面`:
@@ -178,7 +178,7 @@ Hadoop
 ------
 
 ### 下载安装
-`下载地址`:[http://hadoop.apache.org/releases.html](http://hadoop.apache.org/releases.html)
+`下载地址`:[http://hadoop.apache.org/releases.html](http://hadoop.apache.org/releases.html)  
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/hadoop/tar -C /your/destination
@@ -214,7 +214,7 @@ Hadoop
 ```
 ### 伪分布式部署
 #### 配置core-site.xml
-`hadoop配置文件在hadoop目录下的etc/hadoop里。`
+`hadoop配置文件在hadoop目录下的etc/hadoop里`  
 在core-site.xml里添加:
 ```xml
 	<configuration>
@@ -308,7 +308,7 @@ HBase
 ------
 
 ### 下载安装
-`下载地址`:[http://hbase.apache.org/downloads.html](http://hbase.apache.org/downloads.html)
+`下载地址`:[http://hbase.apache.org/downloads.html](http://hbase.apache.org/downloads.html)  
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/hbase/tar -C /your/destination
