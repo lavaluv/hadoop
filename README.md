@@ -46,6 +46,8 @@ README
 * [Zookeeper](#zookeeper) 
 	* 下载安装
 	* 环境配置
+		* 配置文件
+		* 启动节点
     * 单机部署
     * 伪分布式部署
     * 完全分布式部署
@@ -308,7 +310,7 @@ HBase
 ------
 
 ### 下载安装
-`下载地址`:[http://hbase.apache.org/downloads.html](http://hbase.apache.org/downloads.html)  
+`下载地址`:[http://hbase.apache.org/downloads.html](http://hbase.apache.org/downloads.html)   
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/hbase/tar -C /your/destination
@@ -376,11 +378,44 @@ Zookeeper
 ------
 
 ### 下载安装
-
+`下载地址`:[http://zookeeper.apache.org/releases.html#download](http://zookeeper.apache.org/releases.html#download)  
+解压并移动到自己创建的目录下:
+```bash
+	tar -zxf /your/zookeeper/tar -C /your/destination
+```
 ### 环境配置
+配置hadoop环境变量:
+```bash
+	vi ~/.bashrc
+```
+键入:
+```
+	export ZOOKEEPER_HOME=/your/zookeeper/dir
+	export PATH=$HBASE_HOME/bin:$ZOOKEEPER_HOME/sbin:$PATH
+```
+使配置生效:
+```bash
+	source ~/.bashrc
+```
 
 ### 单机部署
-
+#### 配置文件
+切换到Zookeeper目录/conf下，修改zoo.cfg文件:
+```bash
+	tickTime=2000
+	dataDir=/your/zookeeper/dir/data
+	dataLogDir=/your/zookeeper/dir/logs
+	clientPort=2181
+```
+#### 启动节点
+节点启动:
+```bash
+	./zkServer.sh start
+```
+节点关闭:
+```bash
+	./zkServer.sh stop
+```
 ### 伪分布式部署
 
 ### 完全分布式部署
@@ -391,8 +426,25 @@ Spark
 ------
 
 ### 下载安装
-
+`下载地址`:[http://spark.apache.org/downloads.html](http://spark.apache.org/downloads.html)  
+解压并移动到自己创建的目录下:
+```bash
+	tar -zxf /your/spark/tar -C /your/destination
+```
 ### 环境配置
+配置hadoop环境变量:
+```bash
+	vi ~/.bashrc
+```
+键入:
+```
+	export ZOOKEEPER_HOME=/your/spark/dir
+	export PATH=$HBASE_HOME/bin:$SPARK_HOME/sbin:$PATH
+```
+使配置生效:
+```bash
+	source ~/.bashrc
+```
 
 ### 单机部署
 
@@ -406,8 +458,25 @@ Kafka
 ------
 
 ### 下载安装
-
+`下载地址`:[http://kafka.apache.org/downloads](http://kafka.apache.org/downloads)  
+解压并移动到自己创建的目录下:
+```bash
+	tar -zxf /your/kafka/tar -C /your/destination
+```
 ### 环境配置
+配置hadoop环境变量:
+```bash
+	vi ~/.bashrc
+```
+键入:
+```
+	export KAFKA_HOME=/your/zookeeper/dir
+	export PATH=$HBASE_HOME/bin:$KAFKA_HOME/sbin:$PATH
+```
+使配置生效:
+```bash
+	source ~/.bashrc
+```
 
 ### 单机部署
 
