@@ -15,7 +15,7 @@ public class SSTest {
 				.setAppName("SSTest")
 				.setMaster("local");
 		JavaStreamingContext jssc = new JavaStreamingContext(sConf,Durations.seconds(1));
-		JavaReceiverInputDStream<String> lines = jssc.socketTextStream("localhost", 9999);
+		JavaReceiverInputDStream<String> lines = jssc.socketTextStream("192.168.19.143", 9999);
 		JavaDStream<String> words = lines.flatMap(
 				x -> Arrays.asList(x.split(" ")).iterator());
 		JavaPairDStream<String, Integer> pairs = words.mapToPair(s -> new Tuple2<>(s, 1));

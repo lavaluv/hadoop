@@ -19,7 +19,7 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 public class HBaseQuery extends Configured implements Tool{
-	public void getColumnName(String tableName) throws IOException {
+	public void getColumnFamilyName(String tableName) throws IOException {
 		Connection connection = ConnectionFactory.createConnection(HBaseConfiguration.create());
 		Table table = connection.getTable(TableName.valueOf(tableName));
 		TableDescriptor tableDescriptor = table.getDescriptor();
@@ -52,18 +52,21 @@ public class HBaseQuery extends Configured implements Tool{
 			scanner.close();
 		}
 	}
+	public static String[] getColumnName(String tableName,String columnFamilyName){
+		return null;
+	}
 	public int run(String[] arg)throws IOException{
 //		if (args.length < 1) {
 //			System.err.println("Usage:HBaseQuery <method> <options>...");
 //			return -1;
 //		}
 		String[] args = {"","","",""};
-		args[0] = "getValue";
+		args[0] = "getColumnFamilyName";
 		args[1] = "pkg";
 		args[2] = "url";
 		switch (args[0]) {
-		case "getColumnName":
-			getColumnName(args[1]);
+		case "getColumnFamilyName":
+			getColumnFamilyName(args[1]);
 			break;
 		case "getValue":
 			getValue(args[1], args[2], 10);

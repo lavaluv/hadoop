@@ -41,7 +41,7 @@ public class SparkDataFromHBase {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void call(Tuple2<ImmutableBytesWritable, Result> result) throws Exception {
-				// TODO Auto-generated method stub
+				// TODO caculation
 				String key = Bytes.toString(result._2.getRow());
 				String name = Bytes.toString(result._2.getValue("id".getBytes(), "name".getBytes()));
 				//String age = Bytes.toString(result._2.getValue("id".getBytes(), "age".getBytes()));
