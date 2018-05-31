@@ -131,6 +131,7 @@ README
 ```
 ### Java 
 `JRE下载地址`:[http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)  
+
 或直接使用yum安装jdk:
 ```bash
 	yum install java
@@ -181,6 +182,7 @@ Hadoop
 
 ### 下载安装
 `下载地址`:[http://hadoop.apache.org/releases.html](http://hadoop.apache.org/releases.html)  
+
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/hadoop/tar -C /your/destination
@@ -311,6 +313,7 @@ HBase
 
 ### 下载安装
 `下载地址`:[http://hbase.apache.org/downloads.html](http://hbase.apache.org/downloads.html)   
+
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/hbase/tar -C /your/destination
@@ -379,6 +382,7 @@ Zookeeper
 
 ### 下载安装
 `下载地址`:[http://zookeeper.apache.org/releases.html#download](http://zookeeper.apache.org/releases.html#download)  
+
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/zookeeper/tar -C /your/destination
@@ -427,6 +431,7 @@ Spark
 
 ### 下载安装
 `下载地址`:[http://spark.apache.org/downloads.html](http://spark.apache.org/downloads.html)  
+
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/spark/tar -C /your/destination
@@ -458,7 +463,8 @@ Kafka
 ------
 
 ### 下载安装
-`下载地址`:[http://kafka.apache.org/downloads](http://kafka.apache.org/downloads)  
+`下载地址`:[http://kafka.apache.org/downloads](http://kafka.apache.org/downloads) 
+
 解压并移动到自己创建的目录下:
 ```bash
 	tar -zxf /your/kafka/tar -C /your/destination
