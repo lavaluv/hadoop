@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.hadoop.hbase.client.Put;
@@ -11,18 +12,23 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import scala.Tuple2;
 
 public class SparkDataIntoHBase {
+	public static final String HBASE_TABLE_NAME="pkg";
+	private static final String HBASE_COLUMNFAMILY_NAME="value";
 	public static void main(String[] args)throws Exception{
 		SparkConf sConf = new SparkConf()
 				.setAppName("SparkDataIntoHBase")
-				.setMaster("yarn");
+				.setMaster("local");
 		JavaSparkContext sContext = new JavaSparkContext(sConf);
-		String tableName = "pkg";
 		sContext.hadoopConfiguration().set("hbase.zookeeper.quorum","hadoop");
 		sContext.hadoopConfiguration().set("hbase.zookeeper.property.clientPort","2181");
-		sContext.hadoopConfiguration().set(TableOutputFormat.OUTPUT_TABLE, tableName);
+		sContext.hadoopConfiguration().set(TableOutputFormat.OUTPUT_TABLE, HBASE_TABLE_NAME);
 		
 		Job job = Job.getInstance(sContext.hadoopConfiguration());
 		job.setOutputKeyClass(ImmutableBytesWritable.class);
@@ -37,18 +43,31 @@ public class SparkDataIntoHBase {
 				.mapToPair(new PairFunction<Map<?,?>, ImmutableBytesWritable, Put>() {
 					private static final long serialVersionUID = 1L;
 					@Override
-					public Tuple2<ImmutableBytesWritable, Put> call(Map<?, ?> in){
-						byte[] rowKey = RowKeyConverter.makeInfoRowKey(
-								in.get("id").toString(), in.get("ts").toString());
-						Put put = new Put(rowKey);
-						for(Map.Entry<?, ?> entry : in.entrySet()) {
-							byte[] column = Bytes.toBytes(entry.getKey().toString());
-							byte[] qualifier = Bytes.toBytes(String.valueOf(1));
-							byte[] value = Bytes.toBytes(entry.getValue().toString());
-							put.addColumn(column,qualifier,value);
+					public Tuple2<ImmutableBytesWritable, Put> call(Map<?, ?> in) throws JsonParseException, JsonMappingException, IOException{
+						if(in != null) {
+							ObjectMapper mapper = new ObjectMapper();
+							byte[] rowKey = RowKeyConverter.PTDRowKey(
+									in.get("id").toString(), mapper.writeValueAsString(in.get("ts")));
+							Put put = new Put(rowKey);
+							for(Map.Entry<?, ?> entry : in.entrySet()) {
+								if (entry.getValue() != null && entry.getValue().toString() != "[]") {
+									byte[] column = Bytes.toBytes(HBASE_COLUMNFAMILY_NAME);
+									byte[] qualifier = Bytes.toBytes(entry.getKey().toString());
+									byte[] value;
+									if(entry.getValue().toString().indexOf("{") == -1 && entry.getValue().toString().indexOf("[") == -1) {
+										value = Bytes.toBytes(entry.getValue().toString());
+									}else {
+										value = Bytes.toBytes(mapper.writeValueAsString(entry.getValue()));
+									}
+									put.addColumn(column, qualifier, value);
+								}
+							}
+							return new Tuple2<ImmutableBytesWritable, Put>(
+									new ImmutableBytesWritable(),put);
+						}else {
+							return null;
 						}
-						return new Tuple2<ImmutableBytesWritable, Put>(
-								new ImmutableBytesWritable(),put);
+						
 					}
 				});
 		pairRDD.saveAsNewAPIHadoopDataset(job.getConfiguration());
